@@ -40,12 +40,20 @@ function funcs.doMouseClick(x, y)
 end
 
 function funcs.calculateDistance(x, y)
-    if typeof(x) ~= "Vector3" or typeof(y) ~= "Vector3" then
-        warn("calculateDistance expects two Vector3s")
+    local typeX = typeof(x)
+    local typeY = typeof(y)
+
+    local isVector3Pair = typeX == "Vector3" and typeY == "Vector3"
+    local isVector2Pair = typeX == "Vector2" and typeY == "Vector2"
+
+    if not (isVector3Pair or isVector2Pair) then
+        warn("calculateDistance expects two Vector3s or two Vector2s, got:", typeX, "and", typeY)
         return
     end
+
     return (x - y).Magnitude
 end
+
 
 function funcs.addInputListener(keycode, func)
     if not keycode or not func then return end
