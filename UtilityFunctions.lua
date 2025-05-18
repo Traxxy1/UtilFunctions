@@ -21,7 +21,7 @@ function Functions.EnsureCharacterLoaded(player)
 end
 
 function Functions.GetHumanoidRootPart(player)
-    if Functions.ensureCharacterLoaded(player) then
+    if Functions.EnsureCharacterLoaded(player) then
         return player.Character.HumanoidRootPart
     else
         warn("GetHumanoidRootPart expected player, you gave:", tostring(player))
