@@ -100,7 +100,7 @@ function Functions.GetClosestPlayer(position, teamName, child)
         if player and player ~= plr and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
             if teamName == nil or (player.Team and player.Team.Name == teamName) then
                 if child == nil or (player:FindFirstChild(child)) then
-                    local distance = Functions.calculateDistance(position, player.Character.HumanoidRootPart.Position)
+                    local distance = Functions.CalculateDistance(position, player.Character.HumanoidRootPart.Position)
                     if distance < shortestDistance then
                         shortestDistance = distance
                         closestPlayer = player
