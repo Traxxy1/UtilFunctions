@@ -24,7 +24,7 @@ function Functions.GetHumanoidRootPart(player)
     if Functions.EnsureCharacterLoaded(player) then
         return player.Character.HumanoidRootPart
     else
-        warn("GetHumanoidRootPart expected player, you gave:", tostring(player))
+        warn("GetHumanoidRootPart - Player not loaded")
         return
     end
 end
