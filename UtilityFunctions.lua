@@ -13,7 +13,7 @@ setmetatable(services, {
 })
 
 function Functions.EnsureCharacterLoaded(player)
-    if player and player.Character and player.Character:FindFirstChild("Head") and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChild("Humanoid")  then
+    if player and player.Character and player.Character:FindFirstChild("Head") and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChild("Humanoid") then
         return true
     else
         return false
