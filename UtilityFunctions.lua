@@ -1,4 +1,4 @@
-local Functions = {}
+local Utils = {}
 local UserInputService = game:GetService("UserInputService")
 
 local services = {
@@ -12,7 +12,7 @@ setmetatable(services, {
     end,
 })
 
-function Functions.EnsureCharacterLoaded(player)
+function Utils.EnsureCharacterLoaded(player)
     if player and player.Character and player.Character:FindFirstChild("Head") and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChild("Humanoid") then
         return true
     else
@@ -20,8 +20,8 @@ function Functions.EnsureCharacterLoaded(player)
     end
 end
 
-function Functions.GetHumanoidRootPart(player)
-    if Functions.EnsureCharacterLoaded(player) then
+function Utils.GetHumanoidRootPart(player)
+    if Utils.EnsureCharacterLoaded(player) then
         return player.Character.HumanoidRootPart
     else
         warn("GetHumanoidRootPart - Player not loaded")
@@ -29,7 +29,7 @@ function Functions.GetHumanoidRootPart(player)
     end
 end
 
-function Functions.DoMouseClick(x, y)
+function Utils.DoMouseClick(x, y)
     if typeof(x) ~= "number" or typeof(y) ~= "number" then
         warn("DoMouseClick expects two numbers")
         return
@@ -39,7 +39,7 @@ function Functions.DoMouseClick(x, y)
     services.VirtualInputManager:SendMouseButtonEvent(x, y, 0, false, game, 1)
 end
 
-function Functions.CalculateDistance(x, y)
+function Utils.CalculateDistance(x, y)
     local typeX = typeof(x)
     local typeY = typeof(y)
 
@@ -55,7 +55,7 @@ function Functions.CalculateDistance(x, y)
 end
 
 
-function Functions.AddInputListener(keycode, func)
+function Utils.AddInputListener(keycode, func)
     if not keycode or not func then return end
     if typeof(keycode) ~= "EnumItem" or keycode.EnumType ~= Enum.KeyCode then
         warn("AddInputListener expects Keycode, you gave:", tostring(typeof(keycode)))
@@ -75,7 +75,7 @@ function Functions.AddInputListener(keycode, func)
     end)
 end
 
-function Functions.AddConnection(signal, func)
+function Utils.AddConnection(signal, func)
     if typeof(signal) ~= "RBXScriptSignal" then
         warn("AddConnection expects signal, you gave:", tostring(typeof(signal)))
         return
@@ -87,7 +87,7 @@ function Functions.AddConnection(signal, func)
     return signal:Connect(func)
 end
 
-function Functions.GetClosestPlayer(position, teamName, child)
+function Utils.GetClosestPlayer(position, teamName, child)
     if typeof(position) ~= "Vector3" then
         warn("GetClosestPlayer expects Vector3, you gave:", tostring(typeof(position)))
         return
@@ -100,7 +100,7 @@ function Functions.GetClosestPlayer(position, teamName, child)
         if player and player ~= plr and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
             if teamName == nil or (player.Team and player.Team.Name == teamName) then
                 if child == nil or (player:FindFirstChild(child)) then
-                    local distance = Functions.CalculateDistance(position, player.Character.HumanoidRootPart.Position)
+                    local distance = Utils.CalculateDistance(position, player.Character.HumanoidRootPart.Position)
                     if distance < shortestDistance then
                         shortestDistance = distance
                         closestPlayer = player
@@ -112,4 +112,4 @@ function Functions.GetClosestPlayer(position, teamName, child)
     return closestPlayer
 end
 
-return Functions
+return Utils
