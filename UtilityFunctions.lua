@@ -112,4 +112,28 @@ function Utils.GetClosestPlayer(position, teamName, child)
     return closestPlayer
 end
 
+function Utils.GetClosestPlayerToCrosshair()
+    local plr = game:GetService("Players").LocalPlayer
+    local screenCenter = workspace.CurrentCamera.ViewportSize / 2
+    local closestPlayer
+    local shortestDistance = math.huge
+
+    for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+        if player and player ~= plr and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local playerHead = player.Character:FindFirstChild("Head")
+            if playerHead then
+                local headPos, onScreen = workspace.CurrentCamera:WorldToViewportPoint(playerHead.Position)
+                if headPos and onScreen then
+                    local distance = ((Vector2.new(headPos.X, headPos.Y)) - screenCenter).Magnitude
+                    if distance < shortestDistance then
+                        closestPlayer = player
+                        shortestDistance = distance
+                    end
+                end
+            end
+        end
+    end
+    return closestPlayer
+end
+
 return Utils
