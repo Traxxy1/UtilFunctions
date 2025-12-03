@@ -1,5 +1,7 @@
 local Utils = {}
 local UserInputService = game:GetService("UserInputService")
+local rawwtvpp = workspace.CurrentCamera.WorldToViewportPoint
+local rawffc = workspace.FindFirstChild
 
 local services = {
     VirtualInputManager = Instance.new("VirtualInputManager")
@@ -113,16 +115,15 @@ function Utils.GetClosestPlayer(position, teamName, child)
 end
 
 function Utils.GetClosestPlayerToCrosshair()
-    local plr = game:GetService("Players").LocalPlayer
     local screenCenter = workspace.CurrentCamera.ViewportSize / 2
     local closestPlayer
     local shortestDistance = math.huge
 
     for _, player in pairs(game:GetService("Players"):GetPlayers()) do
-        if player and player ~= plr and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            local playerHead = player.Character:FindFirstChild("Head")
+        if player and player ~= game.Players.LocalPlayer and player.Character and rawffc(player.Character, "HumanoidRootPart") then
+            local playerHead = rawffc(player.Character, "Head")
             if playerHead then
-                local headPos, onScreen = workspace.CurrentCamera:WorldToViewportPoint(playerHead.Position)
+                local headPos, onScreen = rawwtvpp(workspace.CurrentCamera, playerHead.Position)
                 if headPos and onScreen then
                     local distance = ((Vector2.new(headPos.X, headPos.Y)) - screenCenter).Magnitude
                     if distance < shortestDistance then
