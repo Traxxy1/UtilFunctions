@@ -2,6 +2,7 @@ local Utils = {}
 local UserInputService = game:GetService("UserInputService")
 local rawwtvpp = workspace.CurrentCamera.WorldToViewportPoint
 local rawffc = workspace.FindFirstChild
+local rawGetPlayers = game.Players.GetPlayers
 
 local services = {
     VirtualInputManager = Instance.new("VirtualInputManager")
@@ -119,7 +120,7 @@ function Utils.GetClosestPlayerToCrosshair()
     local closestPlayer
     local shortestDistance = math.huge
 
-    for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+    for _, player in pairs(rawGetPlayers(game.Players)) do
         if player and player ~= game.Players.LocalPlayer and player.Character and rawffc(player.Character, "HumanoidRootPart") then
             local playerHead = rawffc(player.Character, "Head")
             if playerHead then
